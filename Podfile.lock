@@ -14,11 +14,14 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - EZLoadingActivity (0.7)
 
 DEPENDENCIES:
   - AFNetworking
+  - EZLoadingActivity
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  EZLoadingActivity: d0450022cfcec79e079d037af922a728828f4b80
 
 COCOAPODS: 0.39.0
