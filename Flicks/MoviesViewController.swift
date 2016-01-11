@@ -22,6 +22,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         loaderView.insertSubview(refreshControl, atIndex: 0)
@@ -54,13 +55,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        let loadingActivity = EZLoadingActivity.self
+        loadingActivity.showWithDelay("Loading...", disableUI: true, seconds: 0.5)
+        loadingActivity.hide()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        EZLoadingActivity.showWithDelay("Loading...", disableUI: false, seconds: 0.5)
         if let movies = movies {
             return movies.count
         } else {
@@ -74,6 +80,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
+        let date = movie["release_date"] as! String
+        let year = date.substringToIndex(date.startIndex.advancedBy(4))
         var posterPath = ""
         if let moviePath = movie["poster_path"] as? String {
             posterPath = moviePath
@@ -86,6 +94,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        cell.yearLabel.text = year
         cell.posterView.setImageWithURL(imageURL!)
         return cell
     }
